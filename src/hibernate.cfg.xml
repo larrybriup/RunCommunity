@@ -1,0 +1,36 @@
+<?xml version='1.0' encoding='UTF-8'?>
+<!DOCTYPE hibernate-configuration PUBLIC
+          "-//Hibernate/Hibernate Configuration DTD 3.0//EN"
+          "http://hibernate.sourceforge.net/hibernate-configuration-3.0.dtd">
+
+<hibernate-configuration>
+<session-factory>
+	<property name="connection.username">run</property>
+	<property name="connection.url">
+		jdbc:oracle:thin:@127.0.0.1:1521:XE
+	</property>
+	<property name="dialect">
+		org.hibernate.dialect.Oracle10gDialect
+	</property>
+	<property name="connection.password">run</property>
+	<property name="connection.driver_class">
+		oracle.jdbc.driver.OracleDriver
+	</property>
+	<property name="show_sql">true</property>
+	<property name="format_sql">true</property>
+	<!-- 
+	
+	<property name="current_session_context_class">thread</property>
+	<property name="hbm2ddl.auto">create</property>
+	 -->
+	
+	<mapping resource="com/eagle/run/common/bean/Blackrecord.hbm.xml" />
+	<mapping resource="com/eagle/run/common/bean/Friendrecord.hbm.xml" />
+	<mapping resource="com/eagle/run/common/bean/Graderecord.hbm.xml" />
+	<mapping resource="com/eagle/run/common/bean/Memberinfo.hbm.xml" />
+	<mapping resource="com/eagle/run/common/bean/Memberspace.hbm.xml" />
+	<mapping resource="com/eagle/run/common/bean/Messagerecord.hbm.xml" />
+	<mapping resource="com/eagle/run/common/bean/Pointaction.hbm.xml" />
+	<mapping resource="com/eagle/run/common/bean/Pointrecord.hbm.xml" />
+</session-factory>
+</hibernate-configuration>

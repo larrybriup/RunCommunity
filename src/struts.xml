@@ -1,0 +1,81 @@
+<!DOCTYPE struts PUBLIC
+    "-//Apache Software Foundation//DTD Struts Configuration 2.1//EN"
+    "http://struts.apache.org/dtds/struts-2.1.dtd">
+
+<struts>
+	<constant name="struts.devMode" value="true"></constant>
+	<constant name="struts.action.extension" value="action,do"></constant>
+	<constant name="struts.ognl.allowStaticMethodAccess" value="true"></constant>
+	<constant name="struts.i18n.encoding" value="UTF-8"></constant>
+	<!-- 设置上传文件的maxSize 默认2M=1024*1024*2=2097152-->
+	<constant name="struts.multipart.maxSize" value="20971520"></constant>
+	<!-- 测试 -->
+	<package name="test" extends="struts-default" namespace="/test">
+		<action name="myTest"> 
+			<result>/register.jsp</result>
+		</action>
+		<action name="UploadAction" class="com.eagle.run.web.action.UploadAction"> 
+			<param name="dir">/upload</param>
+			<result>/test.jsp</result>
+		</action>
+		<action name="DownloadAction" class="com.eagle.run.web.action.DownloadAction"> 
+			<param name="dir">/download</param>
+			<!--type="stream"表示这个action要返回一个io流  -->
+			<result type="stream">  
+				<!-- action中的哪一个方法可以返回io流,方法的名字一定是getXxxx,这里要写xxxx-->    
+				<param name="inputName">fileStream</param>
+				<!--通知浏览器不管可否打开文件,一定弹出下载框 -->
+				<!--filename表示用户要以什么名字把文件下载下来 -->
+				<!--${fileName}表示从当前action中拿一个名字叫fileName的属性值,要有get/set方法 -->
+				<param name="contentDisposition">attachment;filename="${fileName}"</param>
+			</result>
+		</action>
+	</package>
+	<package name="member" extends="struts-default" namespace="/">
+		<action name="MemberRegisterAction" class="com.eagle.run.web.action.MemberRegisterAction">
+			<result>/login.jsp</result>
+			<result name="error">/register.jsp</result>
+		</action>
+		<action name="LoginAction" class="com.eagle.run.web.action.LoginAction">
+			<!-- type="chain" 服务器内部action之间的跳转 -->
+			<result type="chain">
+				<!-- 要跳转的action的名字 -->
+				<param name="actionName">LoginAfterAction</param>
+				<!-- 要跳转的action所属的命名空间 -->
+				<param name="namespace">/member</param>
+			</result>
+			<result name="error">/register.jsp</result>
+		</action>
+		<action name="LogoutAction" class="com.eagle.run.web.action.LogoutAction">
+			<result >/login.jsp</result>
+			<result name="error">/error.jsp</result>
+		</action>
+		<action name="passwd_missingAction" class="com.eagle.run.web.action.passwd_missingAction">
+			<result >/login.jsp</result>
+			<result name="error">/passwd_missing.jsp</result>
+		</action>
+	</package>
+	<!-- 登陆之后的action,例如显示积分前10名 -->
+	<package name="memberLoginAfter" extends="struts-default" namespace="/member">
+		<action name="LoginAfterAction" class="com.eagle.run.web.action.LoginAfterAction"> 
+			<!-- 给action传值,num为action的属性 -->
+			<param name="num">10</param>
+			<result>/member/activity.jsp</result>
+		</action>
+		<action name="spaceAction" class="com.eagle.run.web.action.spaceAction">
+			<result >/member/space.jsp</result>
+			<result name="error">/member/noSpace.jsp</result>
+		</action>
+		<action name="createSpaceAction" class="com.eagle.run.web.action.createSpaceAction">
+			<param name="icon">membericons</param>
+			<result >/member/space.jsp</result>
+			<result name="error">/member/createSpace.jsp</result>
+		</action>
+		<action name="ModifyAction" class="com.eagle.run.web.action.ModifyAction">
+			<result >/member/activity.jsp</result>
+			<result name="error">/member/modify.jsp</result>
+		</action>
+	</package>
+	<!-- 
+	 -->
+</struts>
