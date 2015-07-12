@@ -19,9 +19,9 @@
 	<property name="show_sql">true</property>
 	<property name="format_sql">true</property>
 	<!-- 
-	
 	<property name="current_session_context_class">thread</property>
 	<property name="hbm2ddl.auto">create</property>
+	
 	 -->
 	
 	<mapping resource="com/eagle/run/common/bean/Blackrecord.hbm.xml" />
